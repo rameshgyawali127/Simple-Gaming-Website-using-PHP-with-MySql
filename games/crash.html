@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crash Game</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+    }
+    .container {
+        text-align: center;
+    }
+    h1 {
+        margin-bottom: 20px;
+    }
+    #gameCanvas {
+        border: 1px solid #000;
+        background-color: #c0abab;
+    }
+    #buttonContainer {
+        margin-top: 20px;
+    }
+    .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin: 0 10px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Crash Game</h1>
+    <input type="number" id="stakeInput" placeholder="Enter stake amount">
+    <div id="buttonContainer">
+        <button class="btn" onclick="startGame()">Start</button>
+        <button class="btn" onclick="stopGame()">Stop</button>
+        <button class="btn" onclick="resetGame()">Reset</button>
+    </div>
+    <p id="result"></p>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+</div>
+
+<script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    let requestId;
+    let stake = 0;
+    let multiplier = 1.0;
+    let crashed = false;
+    let balls = [{ y: -50 }, { y: -100 }, { y: -150 }]; // initial positions of the falling objects
+
+    function drawMultiplier() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = "20px Arial";
+        ctx.fillText(`Multiplier: ${multiplier.toFixed(2)}`, 10, 30);
+    }
+
+    function increaseMultiplier() {
+        multiplier += 0.01;
+    }
+
+    function crash() {
+        crashed = true;
+        animateFall();
+        setTimeout(() => {
+            if (stake > 0) {
+                const result = stake * multiplier;
+                alert(`You lose! Final amount: $${result.toFixed(2)}`);
+            } else {
+                alert(`You lose!`);
+            }
+            resetGame();
+        }, 2000); // Adjust the duration of the falling animation
+    }
+
+    function animateFall() {
+        const fallInterval = setInterval(() => {
+            let allBallsLanded = true;
+            balls.forEach(ball => {
+                if (ball.y < canvas.height - 50) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    drawMultiplier();
+                    drawFallingObject(ball);
+                    ball.y += 5; // Adjust the speed of the falling animation
+                    allBallsLanded = false;
+                }
+            });
+            if (allBallsLanded) {
+                clearInterval(fallInterval);
+            }
+        }, 30); // Adjust the interval for smoother animation
+    }
+
+    function drawFallingObject(ball) {
+        ctx.beginPath();
+        ctx.arc(canvas.width / 2, ball.y, 10, 0, Math.PI * 2);
+        ctx.fillStyle = crashed ? "red" : "green";
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function update() {
+        drawMultiplier();
+        if (!crashed) {
+            increaseMultiplier();
+            if (multiplier >= getRandomCrashMultiplier()) { // Check if the multiplier reaches a random crash value
+                crash();
+            } else {
+                requestId = requestAnimationFrame(update);
+            }
+        }
+    }
+
+    function getRandomCrashMultiplier() {
+        return Math.random() * (10 - 2.4) + 2.4; // Generates a random multiplier value between 2.4 and 10
+    }
+
+    function startGame() {
+        stake = parseInt(document.getElementById("stakeInput").value);
+        resetGame();
+        update();
+    }
+
+    function stopGame() {
+        cancelAnimationFrame(requestId);
+        if (stake > 0) {
+            const result = stake * multiplier;
+            alert(`You win! Final amount: $${result.toFixed(2)}`);
+        }
+        resetGame();
+    }
+
+    function resetGame() {
+        cancelAnimationFrame(requestId);
+        multiplier = 1.0;
+        crashed = false;
+        balls = [{ y: -50 }, { y: -100 }, { y: -150 }];
+        drawMultiplier();
+        document.getElementById("stakeInput").value = "";
+        document.getElementById("result").innerText = "";
+    }
+</script>
+
+</body>
+</html>

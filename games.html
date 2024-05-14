@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Selection</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+    }
+    .container {
+        text-align: center;
+    }
+    h1 {
+        margin-bottom: 20px;
+    }
+    .game-row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 40px;
+    }
+    .game-item {
+        margin: 0 20px;
+    }
+    .game-image {
+        height: 170px; /* Fixed height */
+        width: auto;
+        cursor: pointer;
+    }
+    .game-name {
+        font-size: 18px;
+        margin-top: 10px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Choose a Game</h1>
+    <div class="game-row">
+        <div class="game-item">
+            <a href="games/rps.html">
+                <img src="https://media.istockphoto.com/id/1395632555/vector/colorful-hand-icon-set.jpg?s=612x612&w=0&k=20&c=g6r4Oms6euKipRCjlwLx-8MPs1pajjnP4_aK0r6HEeo=" alt="Rock Paper Scissors" class="game-image">
+                <div class="game-name">Rock Paper Scissors</div>
+            </a>
+        </div>
+        <div class="game-item">
+            <a href="games/snake.html">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYQdH-AWGwbCZ0jz51FbCPXD-xFuCvxxHHEg&usqp=CAU" alt="Snake" class="game-image">
+                <div class="game-name">Snake</div>
+            </a>
+        </div>
+        <div class="game-item">
+            <a href="games/crash.html">
+                <img src="https://1xbetnepal.app/wp-content/uploads/2023/09/best-1xbet-crash-game.jpeg" alt="Crash" class="game-image">
+                <div class="game-name">Crash</div>
+            </a>
+        </div>
+    </div>
+    <div class="game-row">
+        <div class="game-item">
+            <a href="https://www.crazygames.com/game/soccer-legends-2021">
+                <img src="data:image/jpeg;base64,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" alt="Football" class="game-image">
+                <div class="game-name">Football</div>
+            </a>
+        </div>
+        <div class="game-item">
+            <a href="https://www.crazygames.com/game/cricket-world-cup">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgStmGq6A09gsDY18BMyeeyzmZA6alLa_X0w&usqp=CAU" alt="Cricket" class="game-image">
+                <div class="game-name">Cricket</div>
+            </a>
+        </div>
+    </div>
+    <div class="game-row">
+        <div class="game-item">
+            <a href="https://www.poki.com/">
+                <img src="https://cdn.sanity.io/images/a389kcxn/gdevelop/1dc8ff7816a7c0b9b5323f76d7877f4a27d61e59-1358x933.png" alt="Poki (Online Games)" class="game-image">
+                <div class="game-name">Poki (Online Games)</div>
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
