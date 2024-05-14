@@ -74,3 +74,4 @@ These are the default paths unless you overrode them manually during your PHP in
 Run the file the way you typically run your PHP files from a browser. To run the PHP code from a 
 development environment IDE, select the file by right-clicking on it and select run. The IDE will 
 complete the tasks necessary to start the server.
+Don't forget to give a Start and If you wanna contribute, you can fork!
